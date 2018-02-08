@@ -1,0 +1,67 @@
+.clearfix:before,
+.clearfix:after,
+.row:before,
+.row:after {
+    clear: both;
+    display: block;
+    content: '';
+}
+
+.container_wrapper {
+    padding: 20px 50px;
+    width: 200px;
+}
+h1 {
+    font-size: 25px;
+    padding-bottom: 20px;
+    color: darkslategray;
+    text-align: center;
+}
+.wins_wrapper {
+    padding: 10px 0;
+}
+.wins_wrapper > span {
+    text-align: center;
+    display: block;
+    font-size: 24px;
+}
+.wins_wrapper div {
+    background-color: skyblue;
+    padding: 5px 0;
+}
+.wins_wrapper div span {
+    font-size: 20px;
+    padding: 0 10px;
+}
+.click_area {
+    float: left;
+}
+.click_area span {
+    display: block;
+    text-align: center;
+    font-size: 40px;
+    width: 50px;
+    height: 50px;
+    background-color: skyblue;
+    margin: 5px;
+    cursor: pointer;
+}
+#result {
+    padding: 20px 5px;
+    font-size: 20px;
+}
+.container_wrapper button {
+    border: none;
+    height: 30px;
+    cursor: pointer;
+    background-color: lightskyblue;
+    font-size: 15px;
+}
+.container_wrapper button:hover {
+    background-color: cadetblue;
+}
+.x_wins,
+.o_wins {
+    width: 15px;
+    height: 15px;
+}

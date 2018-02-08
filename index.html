@@ -1,0 +1,207 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <title>Tic Tac Toe game</title>
+</head>
+
+<body>
+
+<div class="container_wrapper clearfix">
+    <h1>Tic-Tac Toe Game</h1>
+
+    <div class="wins_wrapper">
+        <span>Players</span>
+        <div><span>X wins:</span><span class="x_wins">0</span><span>time(s)</span></div>
+        <div><span>O wins:</span><span class="O_wins">0</span><span>time(s)</span></div>
+    </div>
+
+    <div class="content clearfix">
+        <div data-id="one" class="click_area"><span></span></div>
+        <div data-id="two" class="click_area"><span></span></div>
+        <div data-id="three" class="click_area"><span></span></div>
+        <br/>
+        <div data-id="four" class="click_area"><span></span></div>
+        <div data-id="five" class="click_area"><span></span></div>
+        <div data-id="six" class="click_area"><span></span></div>
+        <br/>
+        <div data-id="seven" class="click_area"><span></span></div>
+        <div data-id="eight" class="click_area"><span></span></div>
+        <div data-id="nine" class="click_area"><span></span></div>
+    </div>
+
+    <div id="result"></div>
+
+    <button type="button" class="next_btn">Next Game</button>
+    <button type="button" class="reset_btn">Reset</button>
+</div>
+
+<script src="js/jquery-3.1.1.js"></script>
+<script>
+    (function($) {
+
+        var winGame = false;
+
+        $(document).ready(function() {
+
+            var resultPrint = $("#result");
+            var multiDimension = [];
+            var clickArea = $(".click_area");
+
+            var x = {
+                result: "X is winner !",
+                value: "X",
+                wins: $(".x_wins"),
+                sum: 0
+            };
+
+            var o = {
+                result: "O is winner !",
+                value: "O",
+                wins: $(".o_wins"),
+                sum: 0
+            };
+
+            var count = 0;
+
+            clickArea.click(function () {
+
+                if(winGame) {
+                    return;
+                }
+
+                var printXO = $(this).find("span");
+                var i = 1;
+
+                if (resultPrint.text() === "") {
+                    count++;
+                    count % 2 === 0 ? printXO.text("O") : printXO.text("X");
+                }
+
+                var array = [];
+                clickArea.each(function() {
+
+                    multiDimension.push($(this).text());
+
+                    if (i % 3 === 0) {
+                        array.push(multiDimension);
+                        multiDimension = [];
+                    }
+                    i++;
+                });
+
+                horizontal(array, x.result, x.value, x.sum);
+                horizontal(array, o.result, o.value);
+                vertical(array, x.result, x.value);
+                vertical(array, o.result, o.value);
+                firstDiagonal(array, x.result, x.value);
+                firstDiagonal(array, o.result, o.value);
+                secondDiagonal(array, x.result, x.value);
+                secondDiagonal(array, o.result, o.value);
+
+                if (resultPrint.text() === x.result && resultPrint.text()){
+                    x.sum++;
+                }
+
+                if (resultPrint.text() === o.result){
+                    o.sum++;
+                }
+
+                x.wins.text(x.sum);
+                o.wins.text(o.sum);
+            });
+
+            $(".next_btn").click(function(){
+                clickArea.find("span").empty();
+                resultPrint.empty();
+                count = 0;
+                winGame = false;
+            });
+
+            $(".reset_btn").click(function() {
+                resultPrint.empty();
+                clickArea.find("span").empty();
+                count = 0;
+                x.sum = 0;
+                o.sum = 0;
+                x.wins.text(0);
+                o.wins.text(0);
+                winGame = false;
+            });
+        });
+
+        var pomArray;
+
+        function horizontal(array, result, value, counter) {
+
+            for (var i = 0; i < 3; i++){
+                pomArray = [];
+                for (var j = 0; j < 3; j++){
+                    if(array[i][j] === value){
+                        pomArray.push(array[i][j]);
+                    }
+                }
+                if (pomArray.length === 3 ){
+                    setWinerData(result);
+                    counter++;
+                    break;
+                }
+            }
+        }
+
+        function vertical(array, result, value) {
+
+            for (var j = 0; j < 3; j++){
+                pomArray = [];
+                for (var i = 0; i < 3; i++){
+                    if(array[i][j] === value){
+                        pomArray.push(array[i][j]);
+                    }
+                }
+                if (pomArray.length === 3){
+                    setWinerData(result);
+                    break;
+                }
+            }
+        }
+
+        function firstDiagonal(array, result, value) {
+            pomArray = [];
+
+            for (var i = 0; i < 3; i++){
+                var j = i;
+                if(array[i][j] === value){
+                    pomArray.push(array[i][j]);
+                }
+                if (pomArray.length === 3){
+                    setWinerData(result);
+                }
+            }
+        }
+
+        function secondDiagonal(array, result, value) {
+            pomArray = [];
+            var j = 3;
+            for (var i = 0; i < 3; i++){
+                j--;
+                if(array[i][j] === value){
+                    pomArray.push(array[i][j]);
+                }
+                if (pomArray.length === 3){
+                    setWinerData(result);
+                }
+            }
+        }
+
+        function setWinerData(result) {
+            document.getElementById("result").innerHTML = result;
+            winGame = true;
+        }
+
+    })(jQuery);
+</script>
+
+</body>
+</html>
